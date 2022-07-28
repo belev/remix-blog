@@ -1,0 +1,37 @@
+.posts-link {
+  display: block;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .posts-link:hover .heading {
+    color: var(--color-primary);
+  }
+  .posts-link:hover .arrow {
+    opacity: 1;
+  }
+}
+
+.posts-heading {
+  margin-top: var(--space-xxl);
+  margin-bottom: var(--space-m);
+  font-size: var(--font-size-l);
+}
+
+.arrow {
+  transition: opacity 250ms;
+  opacity: 0;
+  color: var(--color-primary);
+}
+
+.description {
+  margin-bottom: var(--space-m);
+  font-size: var(--font-size-base);
+}
+
+.read-more {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-base);
+}
