@@ -7,5 +7,8 @@ node_modules
 
 /build/
 /public/build
+/public/sitemap.xml
+/public/rss.xml
+
 /api/index.js
 /api/index.js.map
