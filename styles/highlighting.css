@@ -1,9 +1,7 @@
 pre[class*="language-"],
 code[class*="language-"] {
   direction: ltr;
-  -moz-tab-size: 4;
-    -o-tab-size: 4;
-       tab-size: 4;
+  tab-size: 4;
   text-align: left;
   text-shadow: none;
   word-spacing: normal;
@@ -13,13 +11,7 @@ code[class*="language-"] {
   font-family: Monaco, Menlo, Consolas, "Andale Mono", "Ubuntu Mono",
     "Courier New", monospace;
   font-size: var(--font-size-s);
-  -webkit-hyphens: none;
-          hyphens: none;
-}
-
-pre[class*="language-"]::-moz-selection, code[class*="language-"]::-moz-selection, pre[class*="language-"] *::-moz-selection, code[class*="language-"] *::-moz-selection {
-  background: #264f78;
-  text-shadow: none;
+  hyphens: none;
 }
 
 pre[class*="language-"]::selection,

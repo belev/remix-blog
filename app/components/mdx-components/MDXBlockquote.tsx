@@ -1,9 +1,7 @@
-import styles from "./MDXBlockquote.css";
-
-export const links = () => [{ rel: "stylesheet", href: styles }];
-
-type Props = JSX.IntrinsicElements["blockquote"];
+type Props = JSX.IntrinsicElements['blockquote'];
 
 export const MDXBlockquote = ({ children }: Props) => (
-  <blockquote className="blockquote">{children}</blockquote>
+  <blockquote className="border-l-[6px] border-solid border-l-primary pl-4 italic">
+    {children}
+  </blockquote>
 );

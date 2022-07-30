@@ -1,33 +1,38 @@
-import classNames from "clsx";
-import kebabCase from "lodash.kebabcase";
-import styles from "./MDXHeading.css";
-import { Link } from "../Link/Link";
-import { Icon } from "../Icon/Icon";
+import classNames from 'clsx';
+import kebabCase from 'lodash.kebabcase';
+import { Link } from '../Link/Link';
+import { Icon } from '../Icon/Icon';
 
-type Tag = keyof Pick<
-  JSX.IntrinsicElements,
-  "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
->;
+type Tag = keyof Pick<JSX.IntrinsicElements, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>;
 
 interface Props
-  extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLHeadingElement>,
-    HTMLHeadingElement
-  > {
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement> {
   tag: Tag;
 }
 
-export const links = () => [{ rel: "stylesheet", href: styles }];
+const headingToSizeMap: Record<Tag, string> = {
+  h1: 'text-xxl',
+  h2: 'text-xl',
+  h3: 'text-l',
+  h4: 'text-m',
+  h5: 'text-m',
+  h6: 'text-m'
+};
 
 export const MDXHeading = ({ tag: Tag, children }: Props) => {
   const id = kebabCase(children as string);
 
   return (
-    <Tag className={classNames("heading", Tag)}>
-      <Link href={`#${id}`} id={id} variant="text" className="mdx-link">
+    <Tag className={classNames('mt-7 mb-4', headingToSizeMap[Tag])}>
+      <Link href={`#${id}`} id={id} variant="text" className="group scroll-mt-7 no-underline">
         {children}
       </Link>
-      <Icon name="anchor" width="20" height="20" className="mdx-anchor" />
+      <Icon
+        name="anchor"
+        width="20"
+        height="20"
+        className="inline-block min-w-[20px] align-middle text-inherit opacity-0 transition-opacity duration-250 group-hover:opacity-[1]"
+      />
     </Tag>
   );
 };

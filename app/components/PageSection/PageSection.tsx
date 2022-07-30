@@ -1,5 +1,4 @@
-import { Link } from "../Link/Link";
-import styles from "./PageSection.css";
+import { Link } from '../Link/Link';
 
 type Props = React.PropsWithChildren<{
   heading: string;
@@ -9,12 +8,10 @@ type Props = React.PropsWithChildren<{
   };
 }>;
 
-export const links = () => [{ rel: "stylesheet", href: styles }];
-
 export const PageSection = ({ heading, navigation, children }: Props) => (
   <section>
-    <div className="page-section-heading-wrapper">
-      <h2 className="page-section-heading">{heading}</h2>
+    <div className="flex items-center justify-between border-b border-solid border-black-30 pb-4">
+      <h2 className="text-xl">{heading}</h2>
       {navigation && (
         <div>
           <Link href={navigation.href} variant="secondary">

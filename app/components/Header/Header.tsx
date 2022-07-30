@@ -1,25 +1,18 @@
-import siteConfig from "../../../siteConfig.json";
-import styles from "./Header.css";
-import { Link, links as linkLinks } from "../Link/Link";
-import { Icon } from "../Icon/Icon";
-import { NavigationLink, links as navigationLinkLinks } from "./NavigationLink";
-
-export const links = () => [
-  { rel: "stylesheet", href: styles },
-  ...linkLinks(),
-  ...navigationLinkLinks(),
-];
+import siteConfig from '../../../siteConfig.json';
+import { Link } from '../Link/Link';
+import { Icon } from '../Icon/Icon';
+import { NavigationLink } from './NavigationLink';
 
 export const Header = () => (
-  <header className="header">
-    <nav className="navigation">
+  <header className="my-6 mx-0 flex items-center justify-between">
+    <nav className="-ml-3 flex gap-2">
       <NavigationLink href="/">Home</NavigationLink>
       <NavigationLink href="/blog">Blog</NavigationLink>
       <NavigationLink href="/about">About</NavigationLink>
     </nav>
     <Link
       href={`${siteConfig.siteUrl}/rss.xml`}
-      className="rss"
+      className="transion-colors -mr-1 text-text-secondary duration-300 hover:text-text"
       aria-label="RSS feed"
     >
       <Icon name="rss" />

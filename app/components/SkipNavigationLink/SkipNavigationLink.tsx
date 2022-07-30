@@ -1,18 +1,8 @@
-import {
-  VisuallyHidden,
-  links as visuallyHiddenLinks,
-} from "../VisuallyHidden/VisuallyHidden";
-import styles from "./SkipNavigationLink.css";
-
-export const links = () => [
-  { rel: "stylesheet", href: styles },
-  ...visuallyHiddenLinks(),
-];
-
 export const SkipNavigationLink = () => (
-  <VisuallyHidden>
-    <a href="#skip-nav" className="skip-nav-link">
-      Skip to content
-    </a>
-  </VisuallyHidden>
+  <a
+    href="#skip-nav"
+    className="sr-only focus:not-sr-only focus:fixed focus:top-[15px] focus:left-[15px] focus:z-[1] focus:bg-background focus:p-4 focus:text-text focus:no-underline focus:outline-double focus:outline-[3px] focus:outline-primary"
+  >
+    Skip to content
+  </a>
 );
