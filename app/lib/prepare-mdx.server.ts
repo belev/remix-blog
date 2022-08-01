@@ -1,7 +1,5 @@
 import { bundleMDX } from 'mdx-bundler';
-import remarkMdxImages from 'remark-mdx-images';
 import path from 'path';
-import rehypePrism from 'rehype-prism-plus';
 
 const getCompiledMDX = async (source: string, directory: string) => {
   if (process.platform === 'win32') {
@@ -20,6 +18,13 @@ const getCompiledMDX = async (source: string, directory: string) => {
       'esbuild'
     );
   }
+
+  const [{ default: rehypePrism }, { default: remarkMdxImages }] = await Promise.all([
+    // @ts-ignore
+    import('rehype-prism-plus'),
+    // @ts-ignore
+    import('remark-mdx-images')
+  ]);
 
   return bundleMDX({
     cwd: directory,
