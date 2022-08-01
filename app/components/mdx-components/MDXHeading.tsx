@@ -24,14 +24,14 @@ export const MDXHeading = ({ tag: Tag, children }: Props) => {
 
   return (
     <Tag className={classNames('mt-7 mb-4', headingToSizeMap[Tag])}>
-      <Link href={`#${id}`} id={id} variant="text" className="group scroll-mt-7 no-underline">
+      <Link href={`#${id}`} id={id} variant="text" className="peer scroll-mt-7 no-underline">
         {children}
       </Link>
       <Icon
         name="anchor"
         width="20"
         height="20"
-        className="inline-block min-w-[20px] align-middle text-inherit opacity-0 transition-opacity duration-250 group-hover:opacity-[1]"
+        className="inline-block min-w-[20px] align-middle text-inherit opacity-0 transition-opacity duration-250 peer-hover:opacity-[1]"
       />
     </Tag>
   );

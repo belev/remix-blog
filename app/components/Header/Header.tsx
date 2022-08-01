@@ -11,8 +11,9 @@ export const Header = () => (
       <NavigationLink href="/about">About</NavigationLink>
     </nav>
     <Link
-      href={`${siteConfig.siteUrl}/rss.xml`}
-      className="transion-colors -mr-1 text-text-secondary duration-300 hover:text-text"
+      href="/rss.xml"
+      target="_blank"
+      className="-mr-1 text-text-secondary transition-colors duration-300 hover:text-text"
       aria-label="RSS feed"
     >
       <Icon name="rss" />

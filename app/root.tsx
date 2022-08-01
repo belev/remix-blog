@@ -5,7 +5,7 @@ import { SkipNavigationLink } from '~/components/SkipNavigationLink/SkipNavigati
 import { Footer } from '~/components/Footer/Footer';
 import { Header } from '~/components/Header/Header';
 import tailwindStyles from './styles/tailwind.css';
-import highlightingStyles from '~/styles/highlighting.css';
+import highlightingStyles from './styles/highlighting.css';
 import appStyles from './styles/app.css';
 
 export const meta: MetaFunction = () => ({

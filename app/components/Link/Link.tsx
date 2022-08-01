@@ -13,7 +13,7 @@ type Props = React.PropsWithChildren<
 export const Link = ({ children, href, className: propsClassName, variant, ...rest }: Props) => {
   const isInternalLink = href.startsWith('#') || href.startsWith('/');
   const className = classNames(
-    'focus:outline-double focus:outline-[3px] focus:outline-primary',
+    'focus-visible:outline-double focus-visible:outline-[3px] focus-visible:outline-primary',
     {
       'underline hashover:no-underline hashover:shadow-[0_0_0_currentColor] hashover:transition-shadow hashover:duration-250 hover:shadow-[0_2px_0_currentColor]':
         variant,
