@@ -5,7 +5,10 @@ import type { FrontMatter, Post, StaticPath } from '../types/Post';
 import getCompiledMDX from './prepare-mdx.server';
 import readingTime from 'reading-time';
 
-const postsDirectory = path.join(process.cwd(), 'app/posts');
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+`${__dirname}/../app/posts`;
+
+const postsDirectory = path.join(__dirname, '..', 'app/posts');
 
 interface FileName {
   fullFileName: string;
