@@ -2,7 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "run-s build:css remix build",
+    "build": "run-s build:css-prod remix build",
     "postbuild": "run-p generate:sitemap generate:rss",
     "build:css": "postcss styles/**/*.css --base styles --dir app/styles",
     "build:css-prod": "npm run build:css -- --env production",
