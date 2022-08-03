@@ -2,14 +2,14 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "run-s build:css-prod build:remix",
-    "postbuild": "run-p generate:sitemap generate:rss",
+    "build": "run-s build:css-prod build:remix generate:all",
     "build:css": "postcss styles/**/*.css --base styles --dir app/styles",
     "build:css-prod": "yarn run build:css -- --env production",
     "build:remix": "remix build",
     "dev": "run-p dev:css dev:server",
     "dev:server": "remix dev",
     "dev:css": "yarn run build:css -- --w",
+    "generate:all": "run-p generate:sitemap generate:rss",
     "generate:sitemap": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-sitemap.mjs",
     "generate:rss": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mjs",
     "start": "cross-env NODE_ENV=production netlify dev"
