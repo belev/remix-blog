@@ -4,13 +4,7 @@ import prettier from 'prettier';
 import siteConfig from '../siteConfig.json' assert { type: 'json' };
 
 (async () => {
-  const pages = await globby([
-    'app/routes/*.tsx',
-    'app/posts/*.mdx',
-    '!pages/_*.tsx',
-    '!pages/api',
-    '!pages/404.tsx'
-  ]);
+  const pages = await globby(['app/routes/*.tsx', 'app/posts/*.mdx', '!app/routes/blog.$slug.tsx']);
 
   const sitemap = `
       <?xml version="1.0" encoding="UTF-8"?>
