@@ -5,20 +5,22 @@
     "build": "run-s build:css-prod build:remix",
     "postbuild": "run-p generate:sitemap generate:rss",
     "build:css": "postcss styles/**/*.css --base styles --dir app/styles",
-    "build:css-prod": "npm run build:css -- --env production",
+    "build:css-prod": "yarn run build:css -- --env production",
     "build:remix": "remix build",
     "dev": "run-p dev:css dev:server",
     "dev:server": "remix dev",
-    "dev:css": "npm run build:css -- --w",
+    "dev:css": "yarn run build:css -- --w",
     "generate:sitemap": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-sitemap.mjs",
-    "generate:rss": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mjs"
+    "generate:rss": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mjs",
+    "start": "cross-env NODE_ENV=production netlify dev"
   },
   "dependencies": {
+    "@netlify/functions": "^1.0.0",
+    "@remix-run/netlify": "^1.6.7",
     "@remix-run/node": "^1.6.7",
     "@remix-run/react": "^1.6.7",
-    "@remix-run/vercel": "^1.6.7",
-    "@vercel/node": "^2.4.4",
     "clsx": "^1.2.1",
+    "cross-env": "^7.0.3",
     "gray-matter": "^4.0.3",
     "invariant": "^2.2.4",
     "lodash.kebabcase": "^4.1.1",
@@ -53,5 +55,6 @@
   },
   "engines": {
     "node": ">=14"
-  }
+  },
+  "packageManager": "yarn@3.2.2"
 }

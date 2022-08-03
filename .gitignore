@@ -2,12 +2,18 @@ node_modules
 
 .cache
 .env
-.vercel
+/.netlify
 .output
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 /build/
 /public/build
-/public/img
 /public/sitemap.xml
 /public/rss.xml
 
