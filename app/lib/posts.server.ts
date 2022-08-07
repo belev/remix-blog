@@ -5,6 +5,7 @@ import type { FrontMatter, Post, StaticPath } from '../types/Post';
 import getCompiledMDX from './prepare-mdx.server';
 import readingTime from 'reading-time';
 import type { Tag } from '~/types/Tag';
+import kebabCase from 'lodash.kebabcase';
 
 const postsDirectory = path.join(__dirname, '../..', 'app/posts');
 
@@ -57,6 +58,23 @@ export function getPostsTags(): Tag {
   }, {});
 }
 
+export function getPostsForTag(tagSlug: string): { posts: Post[]; tag: string } {
+  const posts = getSortedPostsData();
+  let originalTagName: string = '';
+  const foundPosts = posts.filter(({ tags }) => {
+    const foundTag = tags?.find((postTag) => kebabCase(postTag) === tagSlug);
+    if (foundTag) {
+      originalTagName = foundTag;
+    }
+
+    return !!foundTag;
+  });
+  return {
+    posts: foundPosts,
+    tag: originalTagName
+  };
+}
+
 export function getAllPostIds(): StaticPath[] {
   const fileNames = getPostsFileNames();
 
@@ -69,6 +87,7 @@ export function getAllPostIds(): StaticPath[] {
 
 export async function getPostData(slug: string): Promise<Post> {
   const fullPath = path.join(postsDirectory, `${slug}.mdx`);
+
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   const matterResult = matter(fileContents);

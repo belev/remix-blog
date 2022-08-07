@@ -1,4 +1,3 @@
-import siteConfig from '../../../siteConfig.json';
 import { Link } from '../Link/Link';
 import { Icon } from '../Icon/Icon';
 import { NavigationLink } from './NavigationLink';
