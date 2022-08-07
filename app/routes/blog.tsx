@@ -5,13 +5,14 @@ import { PageInformation } from '~/components/PageInformation/PageInformation';
 import { PageSection } from '~/components/PageSection/PageSection';
 import { Posts } from '~/components/Posts/Posts';
 import { getSortedPostsData } from '~/lib/posts.server';
+import siteConfig from '../../siteConfig.json';
 
 export const loader = async () => {
   return json({ posts: getSortedPostsData() });
 };
 
 export const meta: MetaFunction = () => {
-  return { title: 'Blog' };
+  return { title: `Blog | ${siteConfig.siteTitle}` };
 };
 
 export default function Index() {
@@ -20,7 +21,7 @@ export default function Index() {
     <>
       <PageInformation heading="Blog" />
 
-      <PageSection heading="All Posts">
+      <PageSection heading="All Posts" navigation={{ href: '/tags', text: 'View all tags' }}>
         <Posts posts={posts} />
       </PageSection>
     </>
