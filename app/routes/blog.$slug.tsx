@@ -15,8 +15,12 @@ type LoaderData = {
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, 'Post slug is required!');
 
-  const post = await getPostData(params.slug);
-  return json<LoaderData>({ post });
+  try {
+    const post = await getPostData(params.slug);
+    return json<LoaderData>({ post });
+  } catch (error) {
+    throw new Response('Not Found', { status: 404 });
+  }
 };
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
