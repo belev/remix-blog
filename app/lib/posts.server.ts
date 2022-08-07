@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import type { FrontMatter, Post, StaticPath } from '../types/Post';
 import getCompiledMDX from './prepare-mdx.server';
 import readingTime from 'reading-time';
+import type { Tag } from '~/types/Tag';
 
 const postsDirectory = path.join(__dirname, '../..', 'app/posts');
 
@@ -39,6 +40,21 @@ export function getSortedPostsData({ limit }: { limit?: number } = {}): Post[] {
   // Sort posts by date
   const sortedPosts = allPostsData.sort(({ date: a }, { date: b }) => b.localeCompare(a));
   return limit ? sortedPosts.slice(0, limit) : sortedPosts;
+}
+
+export function getPostsTags(): Tag {
+  const posts = getSortedPostsData();
+  return posts.reduce<Tag>((tagsResult, post) => {
+    post.tags?.forEach((tag) => {
+      if (!tagsResult[tag]) {
+        tagsResult[tag] = 0;
+      }
+
+      tagsResult[tag] += 1;
+    });
+
+    return tagsResult;
+  }, {});
 }
 
 export function getAllPostIds(): StaticPath[] {

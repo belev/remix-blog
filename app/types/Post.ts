@@ -4,6 +4,7 @@ export interface FrontMatter {
   title: string;
   description: string;
   date: string;
+  tags?: string[];
 }
 
 export type Post = FrontMatter & {
