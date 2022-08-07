@@ -24,7 +24,7 @@ export default function Index() {
           {Object.entries(tags).map(([tag, tagPosts]) => (
             <li key={tag}>
               <Link href={`/tags/${kebabCase(tag)}`} variant="secondary">
-                {tag} - ({tagPosts} posts)
+                {tag} ({tagPosts} {tagPosts === 1 ? 'post' : 'posts'})
               </Link>
             </li>
           ))}
