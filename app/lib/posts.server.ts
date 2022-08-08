@@ -2,14 +2,14 @@ import type { Post } from '../types/Post';
 import content from '../content.json';
 import type { Tag, Tags } from '~/types/Tags';
 
-export function getSortedPostsData({ limit }: { limit?: number } = {}): Post[] {
+export const getSortedPostsData = ({ limit }: { limit?: number } = {}): Post[] => {
   const sortedPosts = Object.values(content.posts).sort(({ date: a }, { date: b }) =>
     b.localeCompare(a)
   );
   return limit ? sortedPosts.slice(0, limit) : sortedPosts;
-}
+};
 
-export function getPostData(slug: string): Post {
+export const getPostData = (slug: string): Post => {
   const post: Post | undefined = (content.posts as any)[slug];
 
   if (!post) {
@@ -17,13 +17,13 @@ export function getPostData(slug: string): Post {
   }
 
   return post;
-}
+};
 
-export function getPostsTags(): Tags {
+export const getPostsTags = (): Tags => {
   return content.tags;
-}
+};
 
-export function getPostsForTag(tagSlug: string): { posts: Post[]; tag: string } {
+export const getPostsForTag = (tagSlug: string): { posts: Post[]; tag: string } => {
   const tag: Tag | undefined = (content.tags as any)[tagSlug];
 
   if (!tag || !tag.posts.length) {
@@ -36,4 +36,4 @@ export function getPostsForTag(tagSlug: string): { posts: Post[]; tag: string } 
     posts,
     tag: tag.tagName
   };
-}
+};

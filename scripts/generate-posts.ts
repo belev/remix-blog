@@ -16,7 +16,7 @@ interface FileName {
   fileName: string;
 }
 
-async function getPostsFileNames(): Promise<FileName[]> {
+const getPostsFileNames = async (): Promise<FileName[]> => {
   const postsDirectoryFiles = await fs.readdir(postsDirectory);
 
   return postsDirectoryFiles
@@ -25,9 +25,9 @@ async function getPostsFileNames(): Promise<FileName[]> {
       fullFileName,
       fileName: fullFileName.replace(/\.mdx$/, '')
     }));
-}
+};
 
-export async function getSortedPostsData({ limit }: { limit?: number } = {}): Promise<Post[]> {
+const getSortedPostsData = async ({ limit }: { limit?: number } = {}): Promise<Post[]> => {
   const fileNames = await getPostsFileNames();
   const allPostsData = await Promise.all(
     fileNames.map(async ({ fileName, fullFileName }) => {
@@ -46,7 +46,7 @@ export async function getSortedPostsData({ limit }: { limit?: number } = {}): Pr
   // Sort posts by date
   const sortedPosts = allPostsData.sort(({ date: a }, { date: b }) => b.localeCompare(a));
   return limit ? sortedPosts.slice(0, limit) : sortedPosts;
-}
+};
 
 const getPostData = async (slug: string): Promise<Post> => {
   const fullPath = path.join(postsDirectory, `${slug}.mdx`);
