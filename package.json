@@ -9,8 +9,10 @@
     "dev": "run-p dev:css dev:server",
     "dev:server": "remix dev",
     "dev:css": "yarn run build:css -- --w",
+    "generate:all": "run-p generate:sitemap generate:rss generate:posts",
     "generate:sitemap": "node -r esbuild-register ./scripts/generate-sitemap.ts",
     "generate:rss": "node -r esbuild-register ./scripts/generate-rss.ts",
+    "generate:posts": "node -r esbuild-register ./scripts/generate-posts.ts",
     "start": "cross-env NODE_ENV=production netlify dev"
   },
   "dependencies": {

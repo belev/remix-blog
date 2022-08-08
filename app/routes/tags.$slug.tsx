@@ -12,13 +12,11 @@ type LoaderData = ReturnType<typeof getPostsForTag>;
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, 'Tag slug is required!');
 
-  const result = getPostsForTag(params.slug);
-
-  if (!result.posts.length) {
+  try {
+    return json<LoaderData>(getPostsForTag(params.slug));
+  } catch (error) {
     throw new Response('Not Found', { status: 404 });
   }
-
-  return json<LoaderData>(getPostsForTag(params.slug));
 };
 
 export const meta: MetaFunction = ({ data, params }) => {

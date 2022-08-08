@@ -16,8 +16,7 @@ export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, 'Post slug is required!');
 
   try {
-    const post = await getPostData(params.slug);
-    return json<LoaderData>({ post });
+    return json<LoaderData>({ post: getPostData(params.slug) });
   } catch (error) {
     throw new Response('Not Found', { status: 404 });
   }
