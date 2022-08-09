@@ -4,7 +4,6 @@ import { useLoaderData } from '@remix-run/react';
 import { PageInformation } from '~/components/PageInformation/PageInformation';
 import { getPostsTags } from '~/lib/posts.server';
 import siteConfig from '../../siteConfig.json';
-import kebabCase from 'lodash.kebabcase';
 import { Link } from '~/components/Link/Link';
 
 export const loader = async () => {
@@ -21,10 +20,10 @@ export default function Index() {
     <>
       <PageInformation heading="Tags">
         <ul className="mt-6 [&>li:not(:last-child)]:mb-4">
-          {Object.entries(tags).map(([tag, tagPosts]) => (
-            <li key={tag}>
-              <Link href={`/tags/${kebabCase(tag)}`} variant="secondary">
-                {tag} ({tagPosts} {tagPosts === 1 ? 'post' : 'posts'})
+          {Object.values(tags).map(({ postsCount, slug, tagName }) => (
+            <li key={slug}>
+              <Link href={`/tags/${slug}`} variant="secondary">
+                {tagName} ({postsCount} {postsCount === 1 ? 'post' : 'posts'})
               </Link>
             </li>
           ))}

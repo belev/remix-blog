@@ -1,102 +1,39 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import type { FrontMatter, Post, StaticPath } from '../types/Post';
-import getCompiledMDX from './prepare-mdx.server';
-import readingTime from 'reading-time';
-import type { Tag } from '~/types/Tag';
-import kebabCase from 'lodash.kebabcase';
+import type { Post } from '../types/Post';
+import content from '../content.json';
+import type { Tag, Tags } from '~/types/Tags';
 
-const postsDirectory = path.join(__dirname, '../..', 'app/posts');
-
-interface FileName {
-  fullFileName: string;
-  fileName: string;
-}
-
-function getPostsFileNames(): FileName[] {
-  return fs
-    .readdirSync(postsDirectory)
-    .filter((fileName) => fileName.endsWith('.mdx'))
-    .map((fullFileName) => ({
-      fullFileName,
-      fileName: fullFileName.replace(/\.mdx$/, '')
-    }));
-}
-
-export function getSortedPostsData({ limit }: { limit?: number } = {}): Post[] {
-  const fileNames = getPostsFileNames();
-  const allPostsData = fileNames.map(({ fileName, fullFileName }) => {
-    const fullPath = path.join(postsDirectory, fullFileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-    const matterResult = matter(fileContents);
-
-    return {
-      slug: fileName,
-      ...(matterResult.data as FrontMatter)
-    };
-  });
-
-  // Sort posts by date
-  const sortedPosts = allPostsData.sort(({ date: a }, { date: b }) => b.localeCompare(a));
+export const getSortedPostsData = ({ limit }: { limit?: number } = {}): Post[] => {
+  const sortedPosts = Object.values(content.posts).sort(({ date: a }, { date: b }) =>
+    b.localeCompare(a)
+  );
   return limit ? sortedPosts.slice(0, limit) : sortedPosts;
-}
+};
 
-export function getPostsTags(): Tag {
-  const posts = getSortedPostsData();
-  return posts.reduce<Tag>((tagsResult, post) => {
-    post.tags?.forEach((tag) => {
-      if (!tagsResult[tag]) {
-        tagsResult[tag] = 0;
-      }
+export const getPostData = (slug: string): Post => {
+  const post: Post | undefined = (content.posts as any)[slug];
 
-      tagsResult[tag] += 1;
-    });
+  if (!post) {
+    throw new Error('Not Found');
+  }
 
-    return tagsResult;
-  }, {});
-}
+  return post;
+};
 
-export function getPostsForTag(tagSlug: string): { posts: Post[]; tag: string } {
-  const posts = getSortedPostsData();
-  let originalTagName: string = '';
-  const foundPosts = posts.filter(({ tags }) => {
-    const foundTag = tags?.find((postTag) => kebabCase(postTag) === tagSlug);
-    if (foundTag) {
-      originalTagName = foundTag;
-    }
+export const getPostsTags = (): Tags => {
+  return content.tags;
+};
 
-    return !!foundTag;
-  });
-  return {
-    posts: foundPosts,
-    tag: originalTagName
-  };
-}
+export const getPostsForTag = (tagSlug: string): { posts: Post[]; tag: string } => {
+  const tag: Tag | undefined = (content.tags as any)[tagSlug];
 
-export function getAllPostIds(): StaticPath[] {
-  const fileNames = getPostsFileNames();
+  if (!tag || !tag.posts.length) {
+    throw new Error('Not Found');
+  }
 
-  return fileNames.map(({ fileName }) => ({
-    params: {
-      slug: fileName
-    }
-  }));
-}
-
-export async function getPostData(slug: string): Promise<Post> {
-  const fullPath = path.join(postsDirectory, `${slug}.mdx`);
-
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-  const matterResult = matter(fileContents);
-  const compiledMDX = await getCompiledMDX(fileContents, postsDirectory);
+  const posts: Post[] = tag.posts.map((postSlug) => (content.posts as any)[postSlug]);
 
   return {
-    slug,
-    ...(matterResult.data as FrontMatter),
-    code: compiledMDX.code,
-    readingTime: readingTime(fileContents)
+    posts,
+    tag: tag.tagName
   };
-}
+};

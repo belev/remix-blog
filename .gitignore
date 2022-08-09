@@ -21,3 +21,4 @@ node_modules
 /api/index.js.map
 /api/_assets
 /app/styles/*.css
+/app/content.json

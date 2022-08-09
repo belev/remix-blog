@@ -1,23 +1,26 @@
-import fs from 'fs';
+import * as fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import { globby } from 'globby';
 import RSS from 'rss';
-import siteConfig from '../siteConfig.json' assert { type: 'json' };
+import siteConfig from '../siteConfig.json';
+import type { FrontMatter, Post } from '~/types/Post';
 
 (async () => {
   const postPaths = await globby(['app/posts/*.mdx']);
-  const postsData = postPaths.map((postPath) => {
+  const readPosts = postPaths.map(async (postPath) => {
     const fullPath = path.join(process.cwd(), postPath);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const fileContents = await fs.readFile(fullPath, 'utf8');
 
     const matterResult = matter(fileContents);
 
     return {
       slug: postPath.replace('app/posts/', 'blog/').replace(/\.mdx$/, ''),
-      ...matterResult.data
+      ...(matterResult.data as FrontMatter)
     };
   });
+
+  const postsData: Post[] = await Promise.all(readPosts);
 
   const rss = new RSS({
     title: siteConfig.siteTitle,
@@ -36,7 +39,7 @@ import siteConfig from '../siteConfig.json' assert { type: 'json' };
     });
   });
 
-  fs.writeFileSync('public/rss.xml', rss.xml({ indent: '  ' }));
+  await fs.writeFile('public/rss.xml', rss.xml({ indent: '  ' }));
 
   console.log('Generated public/rss.xml successfully 🚀');
 })();

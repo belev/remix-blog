@@ -1,10 +1,15 @@
-import { writeFileSync } from 'fs';
+import * as fs from 'fs/promises';
 import { globby } from 'globby';
 import prettier from 'prettier';
-import siteConfig from '../siteConfig.json' assert { type: 'json' };
+import siteConfig from '../siteConfig.json';
 
 (async () => {
-  const pages = await globby(['app/routes/*.tsx', 'app/posts/*.mdx', '!app/routes/blog.$slug.tsx']);
+  const pages = await globby([
+    'app/routes/*.tsx',
+    'app/posts/*.mdx',
+    '!app/routes/blog.$slug.tsx',
+    '!app/routes/tags.$slug.tsx'
+  ]);
 
   const sitemap = `
       <?xml version="1.0" encoding="UTF-8"?>
@@ -36,7 +41,7 @@ import siteConfig from '../siteConfig.json' assert { type: 'json' };
     parser: 'html'
   });
 
-  writeFileSync('public/sitemap.xml', formatted);
+  await fs.writeFile('public/sitemap.xml', formatted);
 
   console.log('Generated public/sitemap.xml successfully 🚀');
 })();
