@@ -2,7 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "run-s build:css-prod generate:all build:remix",
+    "build": "run-s build:css-prod generate:posts generate:xml build:remix",
     "build:css": "postcss styles/**/*.css --base styles --dir app/styles",
     "build:css-prod": "yarn build:css -- --env production",
     "build:remix": "remix build",
@@ -10,7 +10,7 @@
     "dev:css": "yarn build:css -- --w",
     "dev:posts": "watch 'yarn generate:posts' ./app/posts",
     "dev:server": "remix dev",
-    "generate:all": "run-p generate:sitemap generate:rss generate:posts",
+    "generate:xml": "run-p generate:sitemap generate:rss",
     "generate:sitemap": "node -r esbuild-register ./scripts/generate-sitemap.ts",
     "generate:rss": "node -r esbuild-register ./scripts/generate-rss.ts",
     "generate:posts": "node -r esbuild-register ./scripts/generate-posts.ts",
