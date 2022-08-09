@@ -2,7 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "run-s build:css-prod build:remix generate:all",
+    "build": "run-s build:css-prod generate:all build:remix",
     "build:css": "postcss styles/**/*.css --base styles --dir app/styles",
     "build:css-prod": "yarn build:css -- --env production",
     "build:remix": "remix build",
