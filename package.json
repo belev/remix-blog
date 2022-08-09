@@ -4,11 +4,12 @@
   "scripts": {
     "build": "run-s build:css-prod build:remix generate:all",
     "build:css": "postcss styles/**/*.css --base styles --dir app/styles",
-    "build:css-prod": "yarn run build:css -- --env production",
+    "build:css-prod": "yarn build:css -- --env production",
     "build:remix": "remix build",
-    "dev": "run-p dev:css dev:server",
+    "dev": "run-p dev:css dev:posts dev:server",
+    "dev:css": "yarn build:css -- --w",
+    "dev:posts": "watch 'yarn generate:posts' ./app/posts",
     "dev:server": "remix dev",
-    "dev:css": "yarn run build:css -- --w",
     "generate:all": "run-p generate:sitemap generate:rss generate:posts",
     "generate:sitemap": "node -r esbuild-register ./scripts/generate-sitemap.ts",
     "generate:rss": "node -r esbuild-register ./scripts/generate-rss.ts",
@@ -28,9 +29,7 @@
     "mdx-bundler": "^8.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "reading-time": "^1.5.0",
-    "rehype-prism-plus": "^1.4.2",
-    "remark-mdx-images": "^2.0.0"
+    "reading-time": "^1.5.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.6.7",
@@ -54,9 +53,12 @@
     "postcss-cli": "^10.0.0",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
+    "rehype-prism-plus": "^1.4.2",
+    "remark-mdx-images": "^2.0.0",
     "rss": "^1.2.2",
     "tailwindcss": "^3.1.6",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "watch": "^1.0.2"
   },
   "engines": {
     "node": ">=14"
