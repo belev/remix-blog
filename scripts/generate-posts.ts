@@ -107,5 +107,5 @@ const getCompiledMDX = async (source: string, directory: string) => {
     JSON.stringify(result, null, 2)
   );
 
-  console.log('Generated public/content.json successfully 🚀');
+  console.log('Generated app/content.json successfully 🚀');
 })();
